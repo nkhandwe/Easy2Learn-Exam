@@ -21,6 +21,21 @@
     <link rel="stylesheet" href="{{ asset('vendor/nprogress/nprogress.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/katex/katex.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" defer href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <style>
         :root {
             /* Custom Theme Configuration */
@@ -29,7 +44,6 @@
             --secondary-color: {{ '#' . app(\App\Settings\ThemeSettings::class)->secondary_color }};
         }
     </style>
-    @vite(['resources/js/app.css', 'resources/js/app.js'])
 
     <!-- Scripts -->
     @routes
@@ -42,6 +56,46 @@
     <script src="{{ asset('js/vendor-vue.js') }}" defer></script>
     <script src="{{ asset('js/vendor.js') }}" defer></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: "#3C3C3C",
+                        primary: "#D63548",
+                        secondary: "#F7F1E5",
+                        white: "#fff",
+                        gray: {
+                            100: "#fff"
+                        }
+                    },
+                    maxWidth: {
+                        '8xl': '84rem',
+                        'responsive': '80vw'
+                    },
+                    borderRadius: {
+                        '5xl': '4rem'
+                    },
+                    spacing: {
+                        '128': '32rem',
+                    },
+                    rotate: {
+                        '360': '360deg',
+                    },
+                    zIndex: {
+                        '100': '100',
+                    }
+
+
+                },
+                letterSpacing: {
+                    'widest-xl': '0.35em'
+                }
+
+            }
+        }
+    </script>
 </head>
 
 <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
