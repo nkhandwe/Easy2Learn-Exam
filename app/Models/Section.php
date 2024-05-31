@@ -92,6 +92,11 @@ class Section extends Model
         return $this->belongsToMany(SubCategory::class, 'sub_category_sections', 'section_id', 'sub_category_id');
     }
 
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class, 'exam_sections', 'section_id', 'exam_id');
+    }
+
     public function examSections()
     {
         return $this->hasMany(ExamSection::class);
