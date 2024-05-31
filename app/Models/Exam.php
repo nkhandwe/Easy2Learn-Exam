@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\Filters\QueryFilter;
@@ -55,10 +56,13 @@ class Exam extends Model
         ];
     }
 
+
+    
+
     protected static function booted()
     {
         static::creating(function ($subCategory) {
-            $subCategory->attributes['code'] = 'exam_'.Str::random(11);
+            $subCategory->attributes['code'] = 'exam_' . Str::random(11);
         });
     }
 
@@ -148,5 +152,4 @@ class Exam extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-
 }
