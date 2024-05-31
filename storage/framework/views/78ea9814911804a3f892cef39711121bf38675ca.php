@@ -14,6 +14,10 @@
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 
+
+    <!--Pricing-->
+    <?php echo $__env->make('components.pricing', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
     <!--Features-->
     <?php if($homePageSettings->enable_features): ?>
         <?php if (isset($component)) { $__componentOriginal9896791f17a81069298d61b559ac9f1149c1ecfc = $component; } ?>
@@ -29,10 +33,7 @@
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
     <?php endif; ?>
-
-    <!--Pricing-->
-    <?php echo $__env->make('components.pricing', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
+    
     <!--Testimonials-->
     <?php if($homePageSettings->enable_testimonials): ?>
         <?php if (isset($component)) { $__componentOriginal99843580f067249f9ed6ac259729d2bf4b8605e4 = $component; } ?>
