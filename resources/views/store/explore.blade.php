@@ -5,14 +5,15 @@
 @section('content')
     <x-category-hero :category="$category" :price="$least_price"/>
 
-    <!--Features-->
-    @if($homePageSettings->enable_features)
-        <x-features/>
-    @endif
 
     <!--Pricing-->
     @include('components.pricing')
 
+    <!--Features-->
+    @if($homePageSettings->enable_features)
+        <x-features/>
+    @endif
+    
     <!--Testimonials-->
     @if($homePageSettings->enable_testimonials)
         <x-testimonials/>
