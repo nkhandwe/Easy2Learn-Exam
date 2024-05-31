@@ -65,7 +65,7 @@
             <?php $__currentLoopData = $subCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <li class="me-2" role="presentation">
                     <button
-                        class="inline-block p-4 border-b-2 rounded-t-lg text-2xl hover:text-secondary dark:hover:text-gray-300 <?php echo e($key == 0 ? 'active' : ''); ?>"
+                        class="inline-block p-4 border-b-2 rounded-t-lg text-base hover:text-secondary dark:hover:text-gray-300 <?php echo e($key == 0 ? 'active' : ''); ?>"
                         id="tab-<?php echo e($subcategory->id); ?>" data-tabs-target="#tab-content-<?php echo e($subcategory->id); ?>"
                         type="button" role="tab" aria-controls="tab-content-<?php echo e($subcategory->id); ?>"
                         aria-selected="<?php echo e($key == 0 ? 'true' : 'false'); ?>"><?php echo e($subcategory->name); ?></button>
@@ -79,31 +79,144 @@
                 class="hidden p-4">
                 <h2 class="text-2xl font-bold mb-8 text-primary"><?php echo e($subcategory->name); ?> Test Series</h2>
                 <?php if($subcategory->sections->isEmpty()): ?>
-                    <p>No sections available.</p>
+                    <p>No Exams available.</p>
                 <?php else: ?>
                     <div class="md:flex">
-                        <ul
-                            class="flex-column space-y-4 text-sm font-medium text-white  dark:text-gray-400 md:me-4 mb-4 md:mb-0 mr-5">
-                            <?php $__currentLoopData = $subcategory->sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li>
-                                    <a href="#"
-                                        class="inline-flex items-center px-4 text-2xl bg-primary py-3 rounded-lg hover:text-white
-                                         hover:bg-secondary w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
-                                        <?php echo e($section->name); ?>
-
-                                    </a>
+                        <div class="quant-outter w-full md:w-1/3 overflow-hidden">
+                            <ul>
+                                <li class="quant-outter">
+                                    <div class="quant-block hiddenMenu text-base font-bold active">
+                                        <span class="examlvlcon">A</span>
+                                        <a class="quant-close section-link" id="allTest"
+                                            onclick="toggleContent('all', this)">All Tests</a>
+                                    </div>
+                                    <?php $__currentLoopData = $subcategory->sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <div class="quant-block text-base">
+                                            <?php
+                                                $firstLetter = strtoupper(substr($section->name, 0, 1));
+                                            ?>
+                                            <span class="examlvlcon"><?php echo e($firstLetter); ?></span>
+                                            <a class="text-base font-bold section-link"
+                                                onclick="toggleContent('<?php echo e($section->id); ?>', this)"><?php echo e($section->name); ?></a>
+                                        </div>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </ul>
-                        <div
-                            class="p-6 bg-gray-50 text-medium text-black dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
-                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2"><?php echo e($subcategory->name); ?>
+                            </ul>
+                        </div>
+                        <div class="p-6  text-medium text-black dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+                            <div class="relative overflow-x-auto">
+                                <?php
+                                    $allExams = \App\Models\Exam::where('sub_category_id', $subcategory->id)->get();
+                                ?>
+                                <?php if($allExams->isEmpty()): ?>
+                                    <h1>No Tests available.</h1>
+                                <?php else: ?>
+                                    <table id="table-all"
+                                        class="w-full text-sm text-left rtl:text-right text-dark dark:text-gray-400">
+                                        <thead
+                                            class="text-xs uppercase bg-primary text-white dark:bg-gray-700 dark:text-gray-400">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-base font-bold">SL</th>
+                                                <th scope="col" class="px-6 py-3 text-base font-bold">Exam Name</th>
+                                                <th scope="col" class="px-6 py-3 text-base font-bold">Duration</th>
+                                                <th scope="col" class="px-6 py-3 text-base font-bold">Questions</th>
+                                                <th scope="col" class="px-6 py-3 text-base font-bold">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $__currentLoopData = $allExams; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                    <th scope="row"
+                                                        class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <?php echo e($key + 1); ?>
 
-                                Sections</h3>
-                            <p class="mb-2">This is some placeholder content for the sections associated with the
-                                "<?php echo e($subcategory->name); ?>" subcategory. Clicking another tab will toggle the visibility
-                                of this one for the next.</p>
-                            <p>The tab JavaScript swaps classes to control the content visibility and styling.</p>
+                                                    </th>
+                                                    <td class="px-2 py-2 text-base font-bold"><?php echo e($exam->title); ?></td>
+                                                    <td class="px-2 py-2 text-base font-bold">
+                                                        <?php echo e($exam->total_duration); ?> Min.</td>
+                                                    <td class="px-2 py-2 text-base font-bold">
+                                                        <?php echo e($exam->total_questions); ?> Ques.</td>
+                                                    <td class="px-2 py-2 text-base font-bold">
+                                                        <?php if($exam->is_paid == 0): ?>
+                                                            <a href="#">
+                                                                <button type="button"
+                                                                    class="text-white p-2 bg-primary hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Start
+                                                                    Test</button>
+                                                            </a>
+                                                        <?php else: ?>
+                                                            <button type="button"
+                                                                class="text-white p-2 bg-secondary hover:bg-primary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"><i
+                                                                    class="fa fa-lock"></i> Unlock</button>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </tbody>
+                                    </table>
+                                    <?php $__currentLoopData = $subcategory->sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php
+                                            $sectionExamIds = \DB::table('exam_sections')
+                                                ->where('section_id', $section->id)
+                                                ->pluck('exam_id');
+                                            $sectionExams = \App\Models\Exam::whereIn('id', $sectionExamIds)->get();
+                                        ?>
+                                        <?php if($sectionExams->isEmpty()): ?>
+                                            <h1 id="table-<?php echo e($section->id); ?>" class="hidden">No Tests available in
+                                                this section.</h1>
+                                        <?php else: ?>
+                                            <table id="table-<?php echo e($section->id); ?>"
+                                                class="w-full text-sm text-left rtl:text-right text-dark dark:text-gray-400 hidden">
+                                                <thead
+                                                    class="text-xs uppercase bg-primary text-white dark:bg-gray-700 dark:text-gray-400">
+                                                    <tr>
+                                                        <th scope="col" class="px-6 py-3 text-base font-bold">SL
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3 text-base font-bold">Exam
+                                                            Name</th>
+                                                        <th scope="col" class="px-6 py-3 text-base font-bold">
+                                                            Duration</th>
+                                                        <th scope="col" class="px-6 py-3 text-base font-bold">
+                                                            Questions</th>
+                                                        <th scope="col" class="px-6 py-3 text-base font-bold">
+                                                            Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $__currentLoopData = $sectionExams; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $exam): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <tr
+                                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <th scope="row"
+                                                                class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                <?php echo e($key + 1); ?>
+
+                                                            </th>
+                                                            <td class="px-2 py-2 text-base font-bold">
+                                                                <?php echo e($exam->title); ?></td>
+                                                            <td class="px-2 py-2 text-base font-bold">
+                                                                <?php echo e($exam->total_duration); ?> Min.</td>
+                                                            <td class="px-2 py-2 text-base font-bold">
+                                                                <?php echo e($exam->total_questions); ?> Ques.</td>
+                                                            <td class="px-2 py-2 text-base font-bold">
+                                                                <?php if($exam->is_paid == 0): ?>
+                                                                    <a href="#">
+                                                                        <button type="button"
+                                                                            class="text-white p-2 bg-primary hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Start
+                                                                            Test</button>
+                                                                    </a>
+                                                                <?php else: ?>
+                                                                    <button type="button"
+                                                                        class="text-white p-2 bg-secondary hover:bg-primary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"><i
+                                                                            class="fa fa-lock"></i> Unlock</button>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </tbody>
+                                            </table>
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -148,8 +261,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         const subcategoryTabs = document.querySelectorAll('[data-tabs-target]');
         const subcategoryTabContents = document.querySelectorAll('[role="tabpanel"]');
-        const sectionLinks = document.querySelectorAll('.section-link');
-        const sectionContents = document.querySelectorAll('[id^="section-content-"]');
 
         subcategoryTabs.forEach(tab => {
             tab.addEventListener('click', () => {
@@ -161,36 +272,80 @@
 
                 tab.classList.add('border-primary', 'text-primary');
                 target.classList.remove('hidden');
-
-                // Reset section links and content
-                sectionContents.forEach(sc => sc.classList.add('hidden'));
-                const firstSectionLink = target.querySelector('.section-link');
-                if (firstSectionLink) {
-                    firstSectionLink.click();
-                }
             });
         });
 
-        sectionLinks.forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const target = document.querySelector(link.dataset.sectionTarget);
-
-                sectionContents.forEach(sc => sc.classList.add('hidden'));
-                sectionLinks.forEach(sl => sl.classList.remove('bg-blue-700', 'text-white'));
-
-                link.classList.add('bg-blue-700', 'text-white');
-                target.classList.remove('hidden');
-            });
-        });
-
-        // Optionally activate the first tab and first section
+        // Optionally activate the first tab
         if (subcategoryTabs.length) {
             subcategoryTabs[0].click();
         }
     });
 </script>
+<style>
+    .head-category ul {
+        float: left;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        position: relative;
+    }
 
+    .quant-outter ul li:last-child {
+        border: none;
+    }
+
+    .quant-outter ul li {
+        float: left;
+        width: 100%;
+        margin-top: 10px;
+        border-right: 1px solid #ccc;
+    }
+
+    .quant-block {
+        float: left;
+        width: 100%;
+        background: #fff;
+        border-bottom: 1px solid #d3dede;
+        border-right: 1px solid #d3dede;
+        border-top: medium none;
+        padding: 10px;
+    }
+
+    .examlvlcon {
+        border: 2px solid var(--primary-color);
+        color: #000;
+        float: left;
+        background: var(--primary-color);
+        /* font-family: calibri, calibriregular; */
+        font-size: 17px;
+        color: white;
+        font-weight: bold;
+        line-height: normal;
+        margin-right: 10px;
+        padding: 1px;
+        text-align: center;
+        text-transform: uppercase;
+        width: 27px;
+    }
+
+    .quant-outter .quant-block.active {
+        border-bottom: 1px solid #d3dede !important;
+        border-right: 4px solid var(--primary-color) !important;
+        background: #f5fafa !important;
+    }
+
+    .quant-outter ul li a {
+        background: none;
+        color: #666;
+        float: left;
+        font-family: calibri, calibriregular;
+        font-size: 16px;
+        /* padding: 10px; */
+        width: 80%;
+        line-height: 29px;
+    }
+</style>
 <style>
     [role="tab"] {
         border-bottom: 4px solid transparent;
@@ -212,5 +367,70 @@
         border-right: none !important;
         border-top: none !important;
     }
+
+    [role="tab"].hover {
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+
+    }
+
+    [role="tab"].button:focus {
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+
+    }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const examLinks = document.querySelectorAll('.quant-close');
+
+        examLinks.forEach(link => {
+            const examTitle = link.getAttribute('title');
+            if (examTitle) {
+                const firstLetter = examTitle.charAt(0).toUpperCase();
+                const spanElement = document.createElement('span');
+                spanElement.className = 'examlvlcon';
+                spanElement.textContent = firstLetter;
+                link.parentNode.insertBefore(spanElement, link);
+            }
+        });
+    });
+</script>
+<script>
+    function toggleContent(sectionId, element) {
+        // Hide all tables first
+        var tables = document.querySelectorAll('[id^="table-"]');
+        tables.forEach(function(table) {
+            table.classList.add('hidden');
+        });
+
+        // Remove active class from all section links
+        var links = document.querySelectorAll('.section-link');
+        links.forEach(function(link) {
+            link.parentElement.classList.remove('active');
+        });
+
+        // Add active class to the clicked section link
+        element.parentElement.classList.add('active');
+
+        // Show the selected table
+        if (sectionId === 'all') {
+            // Show the table for all exams
+            document.getElementById('table-all').classList.remove('hidden');
+        } else {
+            // Show only the selected section's table
+            var table = document.getElementById('table-' + sectionId);
+            if (table) {
+                table.classList.remove('hidden');
+            }
+        }
+    }
+
+    // Set default active section and content
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleContent('all', document.getElementById('allTest'));
+    });
+</script>
 <?php /**PATH C:\xampp\htdocs\resources\views/components/pricing.blade.php ENDPATH**/ ?>
