@@ -93,9 +93,10 @@
     </footer>
 @endif --}}
 @if ($homePageSettings->enable_footer)
-<div class="h-20"></div>
-<footer class=" bg-gray-800" aria-labelledby="footer-heading" aria-label="footer">
-        <div class="bg-primary rounded-3xl grid md:grid-cols-3   max-w-7xl p-10 py-10 mx-auto" style="transform: translateY(-6rem)">
+    <div class="h-20"></div>
+    <footer class=" bg-gray-800" aria-labelledby="footer-heading" aria-label="footer">
+        <div class="bg-primary rounded-3xl grid md:grid-cols-3   max-w-7xl p-10 py-10 mx-auto"
+            style="transform: translateY(-6rem)">
             <div class="md:col-span-2 text-white max-w-xl">
                 <h2 class="text-4xl font-medium leading-none">
                     Power up a Better Communications Experience
@@ -314,7 +315,9 @@
         </div>
     </footer>
 @endif
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"
+    integrity="sha512-u3fPA7V8qQmhBPNT5quvaXVa1mnnLSXUep5PS1qo5NRzHwG19aHmNJnj1Q8hpA/nBWZtZD4r4AX6YOt5ynLN2g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 
