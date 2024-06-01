@@ -13,7 +13,7 @@
 
         <div class="py-8">
             <div class="card flex flex-col justify-center items-center">
-                <div class="card-body w-full grid grid-cols-1 divide-y divide-gray-200">
+                <div class="card-body w-full grid grid-cols-1 divide-y divide-primary text-primary">
                     <template v-for="(skill, index) in section.skills">
                         <skill-card :skill="skill" :category-slug="category.slug" :section-slug="section.slug" :sno="index+1"></skill-card>
                     </template>
