@@ -3858,7 +3858,7 @@ var render = function () {
               "div",
               {
                 staticClass:
-                  "card-body w-full grid grid-cols-1 divide-y divide-gray-200",
+                  "card-body w-full grid grid-cols-1 divide-y divide-primary text-primary",
               },
               [
                 _vm._l(_vm.section.skills, function (skill, index) {
