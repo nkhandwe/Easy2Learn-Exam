@@ -137,15 +137,17 @@
                                                         {{ $exam->total_questions }} Ques.</td>
                                                     <td class="px-2 py-2 text-base font-bold">
                                                         @if ($exam->is_paid == 0)
-                                                            <a href="#">
+                                                            <a
+                                                                href="{{ route('exam_instructions', ['exam' => $exam->slug]) }}">
                                                                 <button type="button"
                                                                     class="text-white p-2 bg-primary hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Start
                                                                     Test</button>
                                                             </a>
                                                         @else
                                                             <button type="button"
-                                                                class="text-white p-2 bg-secondary hover:bg-primary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"><i
-                                                                    class="fa fa-lock"></i> Unlock</button>
+                                                                class="text-white p-2 bg-secondary hover:bg-primary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                                                onClick="scrollToPricing()"><i class="fa fa-lock"></i>
+                                                                Unlock</button>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -196,14 +198,16 @@
                                                                 {{ $exam->total_questions }} Ques.</td>
                                                             <td class="px-2 py-2 text-base font-bold">
                                                                 @if ($exam->is_paid == 0)
-                                                                    <a href="#">
+                                                                    <a
+                                                                        href="{{ route('exam_instructions', ['exam' => $exam->slug]) }}">
                                                                         <button type="button"
                                                                             class="text-white p-2 bg-primary hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Start
                                                                             Test</button>
                                                                     </a>
                                                                 @else
                                                                     <button type="button"
-                                                                        class="text-white p-2 bg-secondary hover:bg-primary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"><i
+                                                                        class="text-white p-2 bg-secondary hover:bg-primary focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                                                        onClick="scrollToPricing()"><i
                                                                             class="fa fa-lock"></i> Unlock</button>
                                                                 @endif
                                                             </td>
@@ -417,4 +421,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         toggleContent('all', document.getElementById('allTest'));
     });
+</script>
+<script>
+    function scrollToPricing() {
+        const pricingSection = document.getElementById('pricing');
+        if (pricingSection) {
+            pricingSection.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    }
 </script>
